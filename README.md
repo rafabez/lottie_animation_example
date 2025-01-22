@@ -1,5 +1,7 @@
 # Lottie Animation Example
 
+[**Live Demo**](https://rafabeznos.com.br/fx/lottie/door/index.html)
+
 ## Overview
 This project demonstrates the use of Lottie animations combined with audio and dynamic visual effects. A door animation (`door.json`) plays upon user interaction, followed by an eye animation (`eye.json`) layered over the door. The animations are enriched with transitions, background color changes, and synchronized audio effects (`door.mp3`) for a captivating experience.
 
