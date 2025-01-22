@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <title>Lottie Animation Example</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black;
+            overflow: hidden; /* Hide overflow to prevent scrollbars */
+            transition: background-color 2s ease-in-out; /* Add transition for background color change */
+        }
+
+        .clicked {
+            filter: invert(0%) sepia(0%) saturate(105%) hue-rotate(180deg) brightness(105%) contrast(107%);
+        }
+
+        #eyeAnimation {
+            opacity: 0;
+            transition: opacity 2s ease-in-out; /* Adjust the duration for a slower fade-in effect */
+        }
+    </style>
+</head>
+<body>
+
+    <lottie-player id="floatingAnimation" src="door.json" background="transparent" speed="1"></lottie-player>
+
+    <script>
+        const lottiePlayer = document.getElementById('floatingAnimation');
+        const audio = new Audio('door.mp3');
+        audio.preload = 'auto';
+        let animationPlayed = false;
+
+        lottiePlayer.addEventListener('click', () => {
+            if (!animationPlayed) {
+                lottiePlayer.play();
+                animationPlayed = true;
+
+                lottiePlayer.classList.add('clicked');
+                setTimeout(() => {
+                    lottiePlayer.classList.remove('clicked');
+                }, 300);
+
+                // Delay the audio play by 2 seconds
+                setTimeout(() => {
+                    // Play the audio
+                    audio.play();
+                }, 2000);
+            }
+        });
+
+        // Listen for the complete event on the door animation
+        lottiePlayer.addEventListener('complete', () => {
+            // Load the eye.json animation layered over the door.json
+            const eyeAnimation = document.createElement('lottie-player');
+            eyeAnimation.src = 'eye.json';
+            eyeAnimation.background = 'transparent';
+            eyeAnimation.id = 'eyeAnimation';
+            eyeAnimation.style.position = 'absolute';
+            eyeAnimation.style.width = '20%';
+            eyeAnimation.style.height = '20%';
+            eyeAnimation.autoplay = true; // Autoplay the eye animation
+            eyeAnimation.loop = true; // Loop the eye animation
+            document.body.appendChild(eyeAnimation);
+
+            // Trigger the fade-in effect
+            setTimeout(() => {
+                eyeAnimation.style.opacity = '1';
+            }, 100);
+
+            // Change background color to white after the eye animation completes
+            setTimeout(() => {
+                document.body.style.backgroundColor = 'white';
+            }, eyeAnimation.totalFrames * eyeAnimation.duration / 1000);
+        });
+    </script>
+
+</body>
+</html>
